@@ -1,17 +1,15 @@
 ﻿@using System.Globalization
 
 <div class="row">
-    <div class="col"style="width:100vw">
-        <label>Smooth <RadzenCheckBox @bind-Value="@smooth" Name="smooth"></RadzenCheckBox></label>
+    <div class="col"style="width:83vw">
         <RadzenChart>
-            <RadzenAreaSeries Smooth="@smooth" Data="@revenue2019" CategoryProperty="Date" Title="2019" ValueProperty="Revenue" RenderingOrder="1">
+            <RadzenAreaSeries Data="@revenue2019" CategoryProperty="Date" Title="CPU" ValueProperty="Revenue" RenderingOrder="1">
             </RadzenAreaSeries>
-            <RadzenAreaSeries Smooth="@smooth" Data="@revenue2020" CategoryProperty="Date" Title="2020" LineType="LineType.Dashed" ValueProperty="Revenue">
+            <RadzenAreaSeries Data="@revenue2020" CategoryProperty="Date" Title="RAM" LineType="LineType.Dotted" ValueProperty="Revenue">
             </RadzenAreaSeries>
-            <RadzenCategoryAxis Padding="20" FormatString="{0:MMM}" />
+            <RadzenCategoryAxis Padding="20" FormatString="{0:HH:mm:ss}" />
             <RadzenValueAxis Formatter="@FormatAsUSD">
                 <RadzenGridLines Visible="true" />
-                <RadzenAxisTitle Text="Revenue in USD" />
             </RadzenValueAxis>
         </RadzenChart>
     </div>

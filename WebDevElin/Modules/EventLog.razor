@@ -1,5 +1,30 @@
-﻿<h3>EventLog</h3>
+﻿<div class="row d-flex justify-content-center" style="width:100%">
+    <div class="col-md-6" style="width: 100%">
+        <textarea class="event-module" cols="150" readonly wrap="hard">
+        @foreach(var ord in orders)
+        {
+        @ord;
+        }
+</textarea>
+    </div>
+</div>
 
 @code {
+    Dictionary<DateTime, string> events = new Dictionary<DateTime, string>();
 
+    List<string> orders = new List<string>();
+
+    protected override void OnInitialized()
+    {
+        for (var i = 1; i < 20; i++)
+        {
+            orders.Add("TEST STRING TEST STRING TEST STRING; ");
+        }
+    }
+
+    void Change(string text)
+    {
+        events.Add(DateTime.Now, $"{text}");
+        StateHasChanged();
+    }
 }
