@@ -33,18 +33,29 @@ app {
 .event-module {
     width: 100%;
     resize: none;
-    height: 59vh
+    height: 57vh
 }
 
 .top-row {
     height: 2.5rem;
     display: flex;
     align-items: center;
+    z-index:1;
 }
 
 .middle-block {
     display: flex;
     align-items: center;
+}
+
+.circle {
+    width: 15em;
+    height: 15em;
+    background-color: green;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 15em;
+    border: 1px solid black;
 }
 
 .main {
@@ -53,7 +64,6 @@ app {
 
     .main .top-row {
         background-color: #f7f7f7;
-        border-bottom: 1px solid #d6d5d5;
         justify-content: flex-end;
     }
     .main .middle-block {
@@ -62,12 +72,13 @@ app {
     }
     .main .footer-block {
         background-color: #f7f7f7;
-        border-top: 1px solid #d6d5d5;
         justify-content: flex-end;
     }
 
 .sidebar {
-    background-image: linear-gradient(180deg, rgb(5, 39, 103) 0%, #3a0647 70%);
+    background: rgb(235,234,255);
+    background: linear-gradient(360deg, rgba(235,234,255,1) 0%, rgba(229,242,255,1) 50%, rgba(255,255,255,1) 100%);
+    margin-right:5px;
 }
 
     .sidebar .top-row {
@@ -159,7 +170,7 @@ app {
 
     .sidebar {
         width: 50px;
-        height: 93vh;
+        height: 90vh;
         position: sticky;
         top: 0;
     }
