@@ -1,7 +1,21 @@
 ﻿@page "/"
+<div class="middle-block">
+    <div class="col">
+        <div class="row" style="width: 96vw">
+            <WebDevElin.Modules.BarGraph />
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="row">
+                    <WebDevElin.Modules.CPUIndicator />
+                </div>
+            </div>
 
-<h1>Hello, world!</h1>
-
-Welcome to your new app.
-
-<SurveyPrompt Title="How is Blazor working for you?" />
+            <div class="col">
+                <div class="row">
+                    <WebDevElin.Modules.EventLog/>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
