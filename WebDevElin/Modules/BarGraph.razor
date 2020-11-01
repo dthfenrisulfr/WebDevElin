@@ -1,156 +1,56 @@
-﻿@using System.Globalization
+﻿@using System;
+@using System.Timers;
+@using WebDevElin.Data
 
 <div class="row">
-    <div class="col"style="width:83vw">
+    <div class="col" style="width:83vw">
         <RadzenChart>
-            <RadzenAreaSeries Data="@revenue2019" CategoryProperty="Date" Title="CPU" ValueProperty="Revenue" RenderingOrder="1">
-            </RadzenAreaSeries>
-            <RadzenAreaSeries Data="@revenue2020" CategoryProperty="Date" Title="RAM" LineType="LineType.Dotted" ValueProperty="Revenue">
-            </RadzenAreaSeries>
+            <RadzenAreaSeries Data="@CPULoad" CategoryProperty="Date" Title="CPU" ValueProperty="Value" RenderingOrder="1" StrokeWidth="50"/>
+            <RadzenAreaSeries Data="@RAMLoad" CategoryProperty="Date" Title="RAM" ValueProperty="Value" />
+
             <RadzenCategoryAxis Padding="20" FormatString="{0:HH:mm:ss}" />
-            <RadzenValueAxis Formatter="@FormatAsUSD">
-                <RadzenGridLines Visible="true" />
-            </RadzenValueAxis>
         </RadzenChart>
     </div>
 </div>
 
 @code {
-    bool smooth = true;
-    class DataItem
-    {
-        public DateTime Date { get; set; }
-        public double Revenue { get; set; }
-    }
+  bool smooth = true;
+  private Timer aTimer;
+  DataItem[] CPULoad = new DataItem[] { };
+  DataItem[] RAMLoad = new DataItem[] { };
 
-    string FormatAsUSD(object value)
-    {
-        return ((double)value).ToString("C0", CultureInfo.CreateSpecificCulture("en-US"));
-    }
+  List<DataItem> CPUList = new List<DataItem>();
+  List<DataItem> RAMList = new List<DataItem>();
 
-    DataItem[] revenue2019 = new DataItem[] {
-        new DataItem
-        {
-            Date = DateTime.Parse("2019-01-01"),
-            Revenue = 234000
-        },
-        new DataItem
-        {
-            Date = DateTime.Parse("2019-02-01"),
-            Revenue = 269000
-        },
-        new DataItem
-        {
-            Date = DateTime.Parse("2019-03-01"),
-            Revenue = 233000
-        },
-        new DataItem
-        {
-            Date = DateTime.Parse("2019-04-01"),
-            Revenue = 244000
-        },
-        new DataItem
-        {
-            Date = DateTime.Parse("2019-05-01"),
-            Revenue = 214000
-        },
-        new DataItem
-        {
-            Date = DateTime.Parse("2019-06-01"),
-            Revenue = 253000
-        },
-        new DataItem
-        {
-            Date = DateTime.Parse("2019-07-01"),
-            Revenue = 274000
-        },
-        new DataItem
-        {
-            Date = DateTime.Parse("2019-08-01"),
-            Revenue = 284000
-        },
-        new DataItem
-        {
-            Date = DateTime.Parse("2019-09-01"),
-            Revenue = 273000
-        },
-        new DataItem
-        {
-            Date = DateTime.Parse("2019-10-01"),
-            Revenue = 282000
-        },
-        new DataItem
-        {
-            Date = DateTime.Parse("2019-11-01"),
-            Revenue = 289000
-        },
-        new DataItem
-        {
-            Date = DateTime.Parse("2019-12-01"),
-            Revenue = 294000
-        }
-    };
+  protected override void OnInitialized()
+  {
+      SetTimer();
+  }
 
-    DataItem[] revenue2020 = new DataItem[] {
-        new DataItem
-        {
-            Date = DateTime.Parse("2019-01-01"),
-            Revenue = 334000
-        },
-        new DataItem
-        {
-            Date = DateTime.Parse("2019-02-01"),
-            Revenue = 369000
-        },
-        new DataItem
-        {
-            Date = DateTime.Parse("2019-03-01"),
-            Revenue = 333000
-        },
-        new DataItem
-        {
-            Date = DateTime.Parse("2019-04-01"),
-            Revenue = 344000
-        },
-        new DataItem
-        {
-            Date = DateTime.Parse("2019-05-01"),
-            Revenue = 314000
-        },
-        new DataItem
-        {
-            Date = DateTime.Parse("2019-06-01"),
-            Revenue = 353000
-        },
-        new DataItem
-        {
-            Date = DateTime.Parse("2019-07-01"),
-            Revenue = 374000
-        },
-        new DataItem
-        {
-            Date = DateTime.Parse("2019-08-01"),
-            Revenue = 384000
-        },
-        new DataItem
-        {
-            Date = DateTime.Parse("2019-09-01"),
-            Revenue = 373000
-        },
-        new DataItem
-        {
-            Date = DateTime.Parse("2019-10-01"),
-            Revenue = 382000
-        },
-        new DataItem
-        {
-            Date = DateTime.Parse("2019-11-01"),
-            Revenue = 389000
-        },
-        new DataItem
-        {
-            Date = DateTime.Parse("2019-12-01"),
-            Revenue = 394000
-        }
-    };
+  private void SetTimer()
+  {
+      aTimer = new Timer(3000);
+      aTimer.Elapsed += OnTimedEvent;
+      aTimer.AutoReset = true;
+      aTimer.Enabled = true;
+  }
+
+  private async void OnTimedEvent(Object source, ElapsedEventArgs e)
+  {
+      CPUList.Add(new DataItem { Date = DateTime.Now, Value = WebDevElin.Data.DiagnosticInfo.GetCPULoad() });
+      RAMList.Add(new DataItem { Date = DateTime.Now, Value = WebDevElin.Data.DiagnosticInfo.GetRAMLoad() });
+      if (CPUList.Count > 500)
+      {
+          CPUList = CPUList.Skip(1).ToList();
+          CPULoad = CPUList.ToArray();
+      }
+      else CPULoad = CPUList.ToArray();
+      if (RAMList.Count > 500)
+      {
+          RAMList = RAMList.Skip(1).ToList();
+          RAMLoad = RAMList.ToArray();
+      }
+      else RAMLoad = RAMList.ToArray();
+      await InvokeAsync(() => StateHasChanged());
+  }
 }

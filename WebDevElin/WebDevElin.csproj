@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <PackageReference Include="Radzen.Blazor" Version="2.15.14" />
+    <PackageReference Include="System.Diagnostics.PerformanceCounter" Version="4.7.0" />
   </ItemGroup>
 
 </Project>

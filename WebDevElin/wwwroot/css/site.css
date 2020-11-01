@@ -48,10 +48,20 @@ app {
     align-items: center;
 }
 
-.circle {
+.circle-green{
     width: 15em;
     height: 15em;
     background-color: green;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 15em;
+    border: 1px solid black;
+}
+
+.circle-red {
+    width: 15em;
+    height: 15em;
+    background-color: red;
     border-radius: 50%;
     text-align: center;
     line-height: 15em;

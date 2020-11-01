@@ -1,6 +1,43 @@
-﻿<div>
+﻿@using System;
+@using System.Timers;
+
+<div>
     <h1 style="text-align:center">CPU</h1>
-    <div class="circle">
-        50%
-    </div>
+    @if (cpuLoad < 90)
+    {
+        <div class="circle-green">
+            <label>@cpuLoad</label>%
+        </div>
+    }
+    else
+    {
+        <div class="circle-red">
+            <label>@cpuLoad</label>%
+        </div>
+    }
+
 </div>
+
+@code{
+  private int cpuLoad { get; set; }
+  private Timer aTimer;
+
+  protected override void OnInitialized()
+  {
+      SetTimer();
+  }
+
+  private void SetTimer()
+  {
+      aTimer = new Timer(3000);
+      aTimer.Elapsed += OnTimedEvent;
+      aTimer.AutoReset = true;
+      aTimer.Enabled = true;
+  }
+
+  private async void OnTimedEvent(Object source, ElapsedEventArgs e)
+  {
+      cpuLoad = WebDevElin.Data.DiagnosticInfo.GetCPULoad();
+      await InvokeAsync(() => StateHasChanged());
+  }
+}

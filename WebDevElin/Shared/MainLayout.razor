@@ -3,35 +3,34 @@
 
     <div class="main">
         <div class="top-row">
-            <div class="col"> Application Name </div>
+            <div class="col"> Abida64 </div>
             <div class="col" style="text-align: end"> @currentTime </div>
         </div>
 
         <div> @Body </div>
-        <Footer />
+        <WebDevElin.Shared.Footer />
     </div>
-@code{
-    protected async override Task OnInitializedAsync()
+@code{      protected override void OnAfterRender(bool firstRender)
+
     {
         cstZone = TimeZoneInfo.FindSystemTimeZoneById("Russian Standard Time");
-        await SetMoscowDateTime();
         SetTimer();
     }
 
     private void SetTimer()
     {
-        var aTimer = new Timer(1000);
+        var aTimer = new Timer(500);
         aTimer.Elapsed += OnTimedEvent;
         aTimer.AutoReset = true;
         aTimer.Enabled = true;
     }
 
-    private async void OnTimedEvent(Object source, ElapsedEventArgs e)
+    private void OnTimedEvent(Object source, ElapsedEventArgs e)
     {
-        await SetMoscowDateTime();
+        SetMoscowDateTime();
     }
 
-    private async Task SetMoscowDateTime()
+    private async void SetMoscowDateTime()
     {
         var utcNowTime = DateTime.UtcNow;
         currentTime = TimeZoneInfo.ConvertTimeFromUtc(utcNowTime, cstZone);
