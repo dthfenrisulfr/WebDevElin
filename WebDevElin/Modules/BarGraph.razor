@@ -4,8 +4,16 @@
 
 <div class="row">
     <div class="col" style="width:83vw">
-        <RadzenChart>
-            <RadzenAreaSeries Data="@CPULoad" CategoryProperty="Date" Title="CPU" ValueProperty="Value" RenderingOrder="1" StrokeWidth="50"/>
+        <RadzenChart Style="height:150px">
+            <RadzenAreaSeries Data="@CPULoad" CategoryProperty="Date" Title="CPU" ValueProperty="Value" RenderingOrder="1"/>
+
+            <RadzenCategoryAxis Padding="20" FormatString="{0:HH:mm:ss}" />
+        </RadzenChart>
+    </div>
+</div>
+<div class="row">
+    <div class="col" style="width:83vw">
+        <RadzenChart Style="height:150px">
             <RadzenAreaSeries Data="@RAMLoad" CategoryProperty="Date" Title="RAM" ValueProperty="Value" />
 
             <RadzenCategoryAxis Padding="20" FormatString="{0:HH:mm:ss}" />

@@ -1,17 +1,17 @@
 ﻿@using System.Timers;
 @inherits LayoutComponentBase
 
-    <div class="main">
-        <div class="top-row">
-            <div class="col"> Abida64 </div>
-            <div class="col" style="text-align: end"> @currentTime </div>
-        </div>
-
-        <div> @Body </div>
-        <WebDevElin.Shared.Footer />
+<div class="main">
+    <div class="top-row">
+        <div class="col"> Abida64 </div>
+        <div class="col" style="text-align: end"> @currentTime </div>
     </div>
-@code{      protected override void OnAfterRender(bool firstRender)
 
+    <div> @Body </div>
+    <WebDevElin.Shared.Footer />
+</div>
+@code{
+    protected override void OnAfterRender(bool firstRender)
     {
         cstZone = TimeZoneInfo.FindSystemTimeZoneById("Russian Standard Time");
         SetTimer();

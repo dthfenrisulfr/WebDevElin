@@ -15,9 +15,9 @@
 
   List<string> orders = new List<string>();
 
-  protected override void OnInitialized()
+  protected override async Task OnInitializedAsync()
   {
-      orders = WebDevElin.Data.DiagnosticInfo.GetLogs();
+      orders = await WebDevElin.Data.DiagnosticInfo.GetLogs();
   }
 
   void Change(string text)

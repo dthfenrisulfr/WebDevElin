@@ -22,19 +22,20 @@ namespace WebDevElin.Data
       return (int)ramCounter.NextValue();
     }
 
-    public static  List<string> GetLogs()
+    public async static Task<List<string>> GetLogs()
     {
       var list = new List<string>();
       var eventlog = EventLog.GetEventLogs("DESKTOP-O0O4A8D");
-
-      foreach (var log in eventlog)
+      await Task.Run(() =>
       {
-        foreach (var entry in log.Entries.OfType<EventLogEntry>().TakeLast(1))
+        foreach (var log in eventlog)
         {
-          list.Add(entry.Message);
+          foreach (var entry in log.Entries.OfType<EventLogEntry>().TakeLast(1))
+          {
+            list.Add(entry.Message);
+          }
         }
-      }
-
+      });
       return list;
     }
   }
