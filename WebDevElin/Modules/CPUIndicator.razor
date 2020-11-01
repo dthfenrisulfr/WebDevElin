@@ -7,40 +7,40 @@
     @if (cpuLoad < 90)
     {
         <div class="circle-green">
-            <label>@cpuLoad</label>%
+            <label style="font-size:70px">@cpuLoad%</label>
         </div>
     }
     else
     {
         <div class="circle-red">
-            <label>@cpuLoad</label>%
+            <label style="font-size:70px">@cpuLoad%</label>
         </div>
     }
 
 </div>
 
 @code{
-  private int cpuLoad { get; set; }
-  private Timer aTimer;
-  private DiagnosticInfo diagnosticInfo;
+    private int cpuLoad { get; set; }
+    private Timer aTimer;
+    private DiagnosticInfo diagnosticInfo;
 
-  protected override void OnInitialized()
-  {
-      diagnosticInfo = new DiagnosticInfo();
-      SetTimer();
-  }
+    protected override void OnInitialized()
+    {
+        diagnosticInfo = new DiagnosticInfo();
+        SetTimer();
+    }
 
-  private void SetTimer()
-  {
-      aTimer = new Timer(1000);
-      aTimer.Elapsed += OnTimedEvent;
-      aTimer.AutoReset = true;
-      aTimer.Enabled = true;
-  }
+    private void SetTimer()
+    {
+        aTimer = new Timer(1000);
+        aTimer.Elapsed += OnTimedEvent;
+        aTimer.AutoReset = true;
+        aTimer.Enabled = true;
+    }
 
-  private async void OnTimedEvent(Object source, ElapsedEventArgs e)
-  {
-      cpuLoad = diagnosticInfo.GetCPULoad();
-      await InvokeAsync(() => StateHasChanged());
-  }
+    private async void OnTimedEvent(Object source, ElapsedEventArgs e)
+    {
+        cpuLoad = diagnosticInfo.GetCPULoad();
+        await InvokeAsync(() => StateHasChanged());
+    }
 }
