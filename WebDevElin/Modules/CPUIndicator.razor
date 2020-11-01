@@ -1,5 +1,6 @@
 ﻿@using System;
 @using System.Timers;
+@using WebDevElin.Data
 
 <div>
     <h1 style="text-align:center">CPU</h1>
@@ -21,15 +22,17 @@
 @code{
   private int cpuLoad { get; set; }
   private Timer aTimer;
+  private DiagnosticInfo diagnosticInfo;
 
   protected override void OnInitialized()
   {
+      diagnosticInfo = new DiagnosticInfo();
       SetTimer();
   }
 
   private void SetTimer()
   {
-      aTimer = new Timer(3000);
+      aTimer = new Timer(1000);
       aTimer.Elapsed += OnTimedEvent;
       aTimer.AutoReset = true;
       aTimer.Enabled = true;
@@ -37,7 +40,7 @@
 
   private async void OnTimedEvent(Object source, ElapsedEventArgs e)
   {
-      cpuLoad = WebDevElin.Data.DiagnosticInfo.GetCPULoad();
+      cpuLoad = diagnosticInfo.GetCPULoad();
       await InvokeAsync(() => StateHasChanged());
   }
 }

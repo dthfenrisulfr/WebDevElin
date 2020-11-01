@@ -1,4 +1,5 @@
 ﻿@using System.Linq;
+@using WebDevElin.Data
 <div class="row d-flex justify-content-center" style="width:100%">
     <div class="col-md-6">
         <textarea class="event-module" cols="150" readonly wrap="hard">
@@ -11,17 +12,13 @@
 </div>
 
 @code {
-  Dictionary<DateTime, string> events = new Dictionary<DateTime, string>();
+  private DiagnosticInfo DiagnosticInfo;
 
   List<string> orders = new List<string>();
 
   protected override async Task OnInitializedAsync()
   {
-      orders = await WebDevElin.Data.DiagnosticInfo.GetLogs();
-  }
-
-  void Change(string text)
-  {
-      events.Add(DateTime.Now, $"{text}");
+      DiagnosticInfo = new DiagnosticInfo();
+      orders = await DiagnosticInfo.GetLogs();
   }
 }

@@ -7,22 +7,22 @@ using System.Timers;
 
 namespace WebDevElin.Data
 {
-  public static class DiagnosticInfo
+  public class DiagnosticInfo
   {
-    private static PerformanceCounter cpuCounter = new PerformanceCounter("Processor", "% Processor Time", "_Total");
-    private static PerformanceCounter ramCounter = new PerformanceCounter("Memory", "Available MBytes");
+    private PerformanceCounter cpuCounter = new PerformanceCounter("Processor", "% Processor Time", "_Total");
+    private PerformanceCounter ramCounter = new PerformanceCounter("Memory", "Available MBytes");
 
-    public static ushort GetCPULoad()
+    public ushort GetCPULoad()
     {
       return (ushort)cpuCounter.NextValue();
     }
 
-    public static int GetRAMLoad()
+    public int GetRAMLoad()
     {
       return (int)ramCounter.NextValue();
     }
 
-    public async static Task<List<string>> GetLogs()
+    public async Task<List<string>> GetLogs()
     {
       var list = new List<string>();
       var eventlog = EventLog.GetEventLogs("DESKTOP-O0O4A8D");

@@ -24,6 +24,7 @@
 @code {
   bool smooth = true;
   private Timer aTimer;
+  private DiagnosticInfo diagnosticInfo;
   DataItem[] CPULoad = new DataItem[] { };
   DataItem[] RAMLoad = new DataItem[] { };
 
@@ -32,6 +33,7 @@
 
   protected override void OnInitialized()
   {
+      diagnosticInfo = new DiagnosticInfo();
       SetTimer();
   }
 
@@ -45,8 +47,8 @@
 
   private async void OnTimedEvent(Object source, ElapsedEventArgs e)
   {
-      CPUList.Add(new DataItem { Date = DateTime.Now, Value = WebDevElin.Data.DiagnosticInfo.GetCPULoad() });
-      RAMList.Add(new DataItem { Date = DateTime.Now, Value = WebDevElin.Data.DiagnosticInfo.GetRAMLoad() });
+      CPUList.Add(new DataItem { Date = DateTime.Now, Value = diagnosticInfo.GetCPULoad() });
+      RAMList.Add(new DataItem { Date = DateTime.Now, Value = diagnosticInfo.GetRAMLoad() });
       if (CPUList.Count > 500)
       {
           CPUList = CPUList.Skip(1).ToList();
